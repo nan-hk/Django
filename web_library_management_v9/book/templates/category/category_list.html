@@ -1,0 +1,72 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+{% load static %}
+
+<head>
+    <h1>Category List</h1>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type='text/javascript'
+            src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.7/css/select.bootstrap.min.css"
+          crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="panel panel-default">
+    <div class="panel-header">
+            <input class="btn btn-success" style="float: right; margin:10px;" type="button" value="add Category"
+                   onclick="location.href='{% url 'category_create' %}'"/>
+        </div>
+        <div class="panel-body">
+
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Preparation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for category in object_list %}
+                <tr>
+                    <td>{{category.name}}</td>
+                    <td>
+                        <input class="btn btn-success" type="button" value="Edit"
+                               onclick="location.href='{% url 'category_edit' category.id %}'"/>
+                        <input class="btn btn-success" type="button" value="Delete"
+                               onclick="location.href='{% url 'category_delete' category.id %}'"/>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+</body>
+</html>
+{% endblock %}

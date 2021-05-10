@@ -1,0 +1,44 @@
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="jumbotron" style="margin: 5em 20em 5em 20em;">
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to access book_list</p>
+  {% endif %}
+{% endif %}
+    <div class="well">
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<table class="table">
+
+<tr>
+  <td>{{ form.username.label_tag }}</td>
+  <td>{{ form.username }}</td>
+</tr>
+
+<tr>
+  <td>{{ form.password.label_tag }}</td>
+  <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" class="btn btn-default" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+      </div>
+  </div>
+</div>
+{% endblock %}

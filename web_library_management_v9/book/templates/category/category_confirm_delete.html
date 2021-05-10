@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+<h1>Category Delete</h1>
+<form method="post">{% csrf_token %}
+    Are you sure you want to delete "{{ object }}" ?
+    <input type="submit" class="btn btn-info" value="Submit" />
+</form>
+{% endblock %}
+
